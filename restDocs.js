@@ -12,14 +12,17 @@ var soccerSeason = {
 };
 
 var team = {
-	"count": Number,
-	"teams": [
-		{
-			"name": String,
-	      	"code": String,
-	      	"shortName": String,
-	      	"squadMarketValue": String,
-	      	"crestUrl": String
-		}
-	]
+	url: '/v1/soccerseasons/',
+	schema: {
+		"count": Number,
+		"teams": [
+			{
+				"name": String,
+				"code": String,
+				"shortName": String,
+				"squadMarketValue": String,
+				"crestUrl": String
+			}
+		]
+	}
 };
