@@ -12,7 +12,7 @@ var soccerSeason = {
 };
 
 var team = {
-	url: '/v1/soccerseasons/',
+	url: '/v1/soccerseasons/{id}/teams',
 	schema: {
 		"count": Number,
 		"teams": [
