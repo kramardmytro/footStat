@@ -14,7 +14,7 @@ var app = express();
 
 // Database
 
-var connection = mongoose.connect('mongodb://localhost/football');
+mongoose.connect('mongodb://localhost/football');
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));

@@ -4,7 +4,7 @@ var mongoRoute = require('./mongo');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.sendFile('./views/index.html');
+  res.sendFile('./public/index.html');
 });
 
 router.get('/soccerSeason', function(req, res) {
