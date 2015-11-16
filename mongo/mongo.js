@@ -1,19 +1,8 @@
 var mongoose = require('mongoose');
 var Client = require('node-rest-client').Client;
-var Schema = mongoose.Schema;
-var soccerSeasons = new Schema(
-    {
-        "id": Number,
-        "caption": String,
-        "league": String,
-        "year": String,
-        numberOfTeams: Number,
-        numberOfGames: Number,
-        lastUpdated: String
-    }
-    , {collection: 'soccerSeasons'});
+var soccerSeasonSchema = require('./schemas/soccerSeason')(mongoose);
 
-function testRestApi () {
+var testRestApi = function() {
     var soccerSeasonsClient = new Client();
     
     var args = {
@@ -39,29 +28,32 @@ function testRestApi () {
 };
 
 var createNewRecord  = function (data) {
-    var seasons;
-    var length = data.length;
-    var soccerSeasonsModel = mongoose.model('soccerSeasonsModel', soccerSeasons);
+    var length = data.length,
+        soccerSeasonsModel = mongoose.model('soccerSeasonsModel', soccerSeasonSchema);
     
     for (var i = 0; i < length; i++) {
-        var item = data[i];
         var season = new soccerSeasonsModel(data[i]);
+
         season.save(function (err) {
             if (err) throw err;
         });
-    };
+    }
 };
 
 var getSoccerSeason = function(req, res) {
-    var soccerSeasonsModel = mongoose.model('soccerSeasonsModel', soccerSeasons);
+    var soccerSeasonsModel = mongoose.model('soccerSeasonsModel', soccerSeasonSchema);
+
     soccerSeasonsModel.find(function (err, data) {
-        if (err) return console.error(err);
+        if (err) throw err;
+
         console.log('data', data);
         res.send(data);
     })
 };
 
 
-module.exports.createNewRecord = createNewRecord;
-module.exports.testRestApi = testRestApi;
-module.exports.getSoccerSeason = getSoccerSeason;
+module.exports = {
+    createNewRecord: createNewRecord,
+    testRestApi: testRestApi,
+    getSoccerSeason: getSoccerSeason
+};
