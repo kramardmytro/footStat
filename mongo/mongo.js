@@ -51,7 +51,6 @@ var getSoccerSeason = function(req, res) {
     })
 };
 
-
 module.exports = {
     createNewRecord: createNewRecord,
     testRestApi: testRestApi,
