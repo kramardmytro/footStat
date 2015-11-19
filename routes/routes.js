@@ -12,5 +12,8 @@ router.get('/soccerSeasons', function(req, res) {
     mongoUtils.getSoccerSeason(req, res);
 });
 
+router.post('/login', function (req, res) {
+    res.send({success: true, request: req.body});
+});
 
 module.exports = router;
