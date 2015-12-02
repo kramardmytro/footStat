@@ -48,7 +48,6 @@ function getSoccerSeason (req, res) {
 
     db.getSoccerSeasons(res);
 }
-git commit -m "[ mongodb ] add schemas for soccer season dependencies"
 
 
 module.exports = {
