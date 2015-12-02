@@ -5,17 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // Database
-var mongoose = require('mongoose');
 var routes = require('./routes/routes');
 
 // Express
 
 var app = express();
-
-// Database
-
-//mongoose.connect('mongodb://localhost/football');
-mongoose.connect('mongodb://admin:admin@ds053894.mongolab.com:53894/football');
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));

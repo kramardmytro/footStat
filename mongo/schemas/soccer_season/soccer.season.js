@@ -1,12 +1,12 @@
 module.exports = function(mongoose) {
     return new mongoose.Schema({
         "id": Number,
-        "caption": String,
-        "league": String,
-        "year": String,
-        "numberOfTeams": Number,
         "numberOfGames": Number,
-        "lastUpdated": String
+        "lastUpdated": String,
+        "numberOfTeams": Number,
+        "year": String,
+        "league": String,
+        "caption": String
     },{
         collection: 'soccerSeasons'
     });
