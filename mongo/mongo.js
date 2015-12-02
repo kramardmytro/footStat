@@ -1,6 +1,6 @@
 var Client = require('node-rest-client').Client;
 var mongoose = require('mongoose');
-var restApi = require('./../routes/rest.api');
+var restApi = require('./../rest_api/rest.api.js');
 
 var service = {
     soccerSeason: require('./services/soccer.season.service')

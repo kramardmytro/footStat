@@ -1,0 +1,10 @@
+[
+  {
+    "uri": "/v1/soccerseasons/1/teams",
+    "lastUpdated": "12.02.15"
+  },
+  {
+    "uri": "/v1/soccerseasons/2/teams",
+    "lastUpdated": "12.02.15"
+  }
+]
