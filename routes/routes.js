@@ -1,7 +1,6 @@
 var express = require('express'),
     router = express.Router(),
-    mongoUtils = require('./../mongo/mongo'),
-    restApi = require('./rest.api');
+    mongoUtils = require('./../mongo/mongo');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -10,6 +9,10 @@ router.get('/', function(req, res) {
 
 router.get('/soccerSeasons', function(req, res) {
     mongoUtils.getSoccerSeason(req, res);
+});
+
+router.get('/teams', function(req, res) {
+    mongoUtils.getTeams(req, res);
 });
 
 router.post('/login', function (req, res) {

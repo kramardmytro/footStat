@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 var schema = {
     soccerSeason: require('./../schemas/soccer_season/soccer.season')(mongoose),
-    leagueFixturesSchema: require('./../schemas/soccer_season/league.fixtures')(mongoose),
-    legueTableSchema: require('./../schemas/soccer_season/league.table')(mongoose),
-    teamsSchema: require('./../schemas/soccer_season/teams')(mongoose)
+    leagueFixtures: require('./../schemas/soccer_season/league.fixtures')(mongoose),
+    leagueTable: require('./../schemas/soccer_season/league.table')(mongoose),
+    teams: require('./../schemas/soccer_season/teams')(mongoose)
 };
 
 function soccerSeasonsGET (data, response) {
@@ -33,7 +33,16 @@ function teamsGET (data, response) {
 }
 
 function saveTeams (data) {
-//    TODO:
+    var length = data.length,
+        teamsModel = mongoose.model('teamsModel', schema.teams);
+
+    for (var i = 0; i < length; i++) {
+        var team = new teamsModel(data[i]);
+
+        team.save(function (err) {
+            if (err) throw err;
+        });
+    }
 }
 
 function getSoccerSeasons(res) {
@@ -42,7 +51,19 @@ function getSoccerSeasons(res) {
     soccerSeasonsModel.find(function (err, data) {
         if (err) throw err;
 
-        console.log('data', data);
+        console.log('getSoccerSeasons(res) data = ', data);
+        res.send(data);
+    })
+}
+
+function getTeams (req, res) {
+    var teamsModel = mongoose.model('teamsModel', schema.teams);
+
+    //TODO: implement mongodb query teams by soccerSeasonId
+    teamsModel.find(function (err, data) {
+        if (err) throw err;
+
+        console.log('getTeams(res) data = ', data);
         res.send(data);
     })
 }
@@ -56,7 +77,8 @@ module.exports = function(){
           teams: teamsGET
       },
       db: {
-          getSoccerSeasons: getSoccerSeasons
+          getSoccerSeasons: getSoccerSeasons,
+          getTeams: getTeams
       }
   }
 };

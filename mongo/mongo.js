@@ -1,57 +1,66 @@
 var Client = require('node-rest-client').Client;
 var mongoose = require('mongoose');
+var restApi = require('./../routes/rest.api');
+
 var service = {
     soccerSeason: require('./services/soccer.season.service')
 };
 
 mongoose.connect('mongodb://admin:admin@ds053894.mongolab.com:53894/football');
 
-function updateSoccerSeason () {
-    var soccerSeasonsClient = new Client(),
-        args = {
-            headers: {"X-Response-Control": 'minified'}
-        };
+var update = {
+    soccerSeason: function () {
+        var soccerSeasonsClient = new Client(),
+            args = { headers: { "X-Response-Control": 'minified' }},
+            url = restApi.host + restApi.items.soccerSeason;
 
-    soccerSeasonsClient.get("http://api.football-data.org/v1/soccerseasons", args, service.soccerSeason.GET.soccerSeason);
+        soccerSeasonsClient.get(url, args, service.soccerSeason.GET.soccerSeason);
 
-    // registering remote methods
-    soccerSeasonsClient.registerMethod("jsonMethod", "http://api.football-data.org/v1/soccerseasons", "GET");
-    soccerSeasonsClient.methods.jsonMethod(function (data, response) {
-        // parsed response body as js object
-        console.log('jsonMethod data', data);
-        // raw response
-        console.log('jsonMethod response', response);
-    });
-}
-
-function updateTeams (soccerSeasonId) {
-    var teamsClient = new Client(),
-        args = {
-            headers: {"X-Response-Control": 'minified'}
-        },
-        url = "http://api.football-data.org/v1/soccerseasons/" + soccerSeasonId + "/teams";
+        // registering remote methods
+        soccerSeasonsClient.registerMethod("jsonMethod", url, "GET");
+        soccerSeasonsClient.methods.jsonMethod(function (data, response) {
+            // parsed response body as js object
+            console.log('jsonMethod data', data);
+            // raw response
+            console.log('jsonMethod response', response);
+        });
+    },
+    teams: function (soccerSeasonId) {
+        var teamsClient = new Client(),
+            args = { headers: { "X-Response-Control": 'minified' } },
+            url = restApi.host + restApi.items.teams.replace('{id}',soccerSeasonId);
 
         teamsClient.get(url, args, service.soccerSeason.GET.teams);
 
         // registering remote methods
         teamsClient.registerMethod("jsonMethod", url, "GET");
         teamsClient.methods.jsonMethod(function (data, response) {
-        // parsed response body as js object
-        console.log('updateTeams data', data);
-        // raw response
-        console.log('updateTeams response', response);
-    });
-}
+            // parsed response body as js object
+            console.log('updateTeams data', data);
+            // raw response
+            console.log('updateTeams response', response);
+        });
+    }
+};
 
-function getSoccerSeason (req, res) {
-    var db = service.soccerSeason.db;
+var get = {
+    soccerSeason: function (req, res) {
+        var db = service.soccerSeason.db;
 
-    db.getSoccerSeasons(res);
-}
+        db.getSoccerSeasons(res);
+    },
+    teams: function (req, res) {
+        var db = service.soccerSeason.db;
+
+        db.getTeams(req, res);
+    }
+};
 
 
 module.exports = {
-    updateSoccerSeason: updateSoccerSeason,
-    updateTeams: updateTeams,
-    getSoccerSeason: getSoccerSeason
+    updateSoccerSeason: update.soccerSeason,
+    updateTeams: update.teams,
+
+    getSoccerSeason: get.soccerSeason,
+    getTeams: get.teams
 };

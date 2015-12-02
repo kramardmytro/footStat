@@ -36,7 +36,17 @@ var teamFixtures = {
     uri: '/v1/teams/{id}/fixtures'
 };
 
-var items = [ soccerSeason, teams, team, players, leagueTable, leagueFixtures, fixtures, fixture, teamFixtures ];
+var items = {
+    soccerSeason: soccerSeason,
+    teams: teams,
+    team: team,
+    players: players,
+    leagueTable: leagueTable,
+    leagueFixtures: leagueFixtures,
+    fixtures: fixtures,
+    fixture: fixture,
+    teamFixtures: teamFixtures
+};
 
 module.exports = {
     host:  host,
