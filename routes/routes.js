@@ -19,4 +19,6 @@ router.post('/login', function (req, res) {
     res.send({success: true, request: req.body});
 });
 
+mongoUtils.updateFixtures();
+
 module.exports = router;
