@@ -11,10 +11,15 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 
-<body>
+<strong>Get from db:</strong><br/><br/>
+<button onclick="utils.getSoccerSeasons()">Soccer Seasons</button><br/><br/>
+<button onclick="utils.getFixtures()">Fixtures</button><br/>
 
-<strong>Yeah baby</strong>
-<button onclick="utils.clickOnTheButton()">Click Me!</button>
+<fieldset>
+    <label for="getTeamsField">GET teams by soccerSeason id</label>
+    <input type="text" required placeholder="soccer season id" id="getTeamsField" value="394"/>
+    <button onclick="utils.getTeams()">Try!</button>
+</fieldset>
 
 <script type="application/javascript" src="js/utils.js"></script>
 </body>

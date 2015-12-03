@@ -41,7 +41,7 @@ function saveFixture (data) {
     }
 }
 
-function getFixtures(res) {
+function getFixtures(req, res) {
     var fixturesModel = mongoose.model('fixturesModel', schema.fixtures.fixtures);
 
     fixturesModel.find(function (err, data) {

@@ -9,6 +9,7 @@ module.exports = function(mongoose) {
     });
 
     return new mongoose.Schema({
+        "soccerSeasonId": Number,
         "count": Number,
         "teams": [ team ]
     },{
