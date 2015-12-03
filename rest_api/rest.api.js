@@ -25,7 +25,7 @@ var leagueFixtures = {
 };
 
 var fixtures = {
-    uri: "v1/fixtures/"
+    uri: "v1/fixtures"
 };
 
 var fixture = {
@@ -49,6 +49,6 @@ var items = {
 };
 
 module.exports = {
-    host:  host,
+    hostString:  host,
     items: items
 };

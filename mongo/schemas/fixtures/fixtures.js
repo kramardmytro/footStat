@@ -21,7 +21,7 @@ module.exports = function(mongoose) {
         "count": Number,
         "fixtures": [ fixture ]
     },{
-        collection: 'leagueFixtures'
+        collection: 'fixtures'
     });
 
     return {

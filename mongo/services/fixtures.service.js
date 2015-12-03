@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    path = require('path');
 
 var schema = {
     fixtures: require('./../schemas/fixtures/fixtures')(mongoose)
@@ -11,16 +12,14 @@ function fixturesGET (data, response) {
 }
 
 function saveFixtures (data) {
-    var length = data.length,
+    var length = data.count,
         fixturesModel = mongoose.model('fixturesModel', schema.fixtures.fixtures);
 
-    for (var i = 0; i < length; i++) {
-        var fixtures = new fixturesModel(data[i]);
+    var fixtures = new fixturesModel(data);
 
-        fixtures.save(function (err) {
-            if (err) throw err;
-        });
-    }
+    fixtures.save(function (err) {
+        if (err) throw err;
+    });
 }
 
 function fixtureGET (data, response) {
@@ -66,15 +65,16 @@ function getFixture (req, res) {
 }
 
 function fixturesCallApi (Client, restApi) {
+
     return function () {
         var fixturesClient = new Client(),
-            args = { headers: { "X-Response-Control": 'minified' }},
-            url = restApi.host + restApi.items.fixtures.uri;
+            args = { headers: { "X-Response-Control": 'minified' }};
+        var fixturesUrl = path.join(restApi.hostString, restApi.items.fixtures.uri);
 
-        fixturesClient.get(url, args, fixtureGET);
+        fixturesClient.get("http://api.football-data.org/v1/fixtures/", args, fixturesGET);
 
         // registering remote methods
-        fixturesClient.registerMethod("jsonMethod", url, "GET");
+        fixturesClient.registerMethod("jsonMethod", "http://api.football-data.org/v1/fixtures/", "GET");
         fixturesClient.methods.jsonMethod(function (data, response) {
             // parsed response body as js object
             console.log('fixturesCallApi data', data);
@@ -105,19 +105,17 @@ function fixtureCallApi (Client, restApi) {
 
 
 
-module.exports = function(){
-    return {
-        fixture: {
-            db: {
-                getFixture: getFixture
-            },
-            callApi: fixtureCallApi
+module.exports = {
+    fixture: {
+        db: {
+            getFixture: getFixture
         },
-        fixtures: {
-            db: {
-                getFixtures: getFixtures
-            },
-            callApi: fixturesCallApi
-        }
+        callApi: fixtureCallApi
+    },
+    fixtures: {
+        db: {
+            getFixtures: getFixtures
+        },
+        callApi: fixturesCallApi
     }
 };
