@@ -9,10 +9,14 @@ router.get('/', function(req, res) {
 
 router.get('/soccerSeasons', function(req, res) {
     mongoUtils.getSoccerSeasons(req, res);
+    //mongoUtils.updateSoccerSeasons(req, res);
 });
 
 router.get('/soccerSeasons/:id/teams', function(req, res) {
     mongoUtils.getTeams(req, res);
+    //mongoUtils.updateTeams(req,res);
+
+
 });
 
 router.get('/fixtures', function(req, res) {
@@ -20,7 +24,8 @@ router.get('/fixtures', function(req, res) {
 });
 
 router.get('/teams', function(req, res) {
-    mongoUtils.getTeams(req, res);
+    //mongoUtils.getTeams(req, res);
+    mongoUtils.updateTeams(req,res);
 });
 
 router.post('/login', function (req, res) {

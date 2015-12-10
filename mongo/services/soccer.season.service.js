@@ -37,12 +37,12 @@ function getSoccerSeasons(req, res) {
 }
 
 function callApi (Client, restApi) {
-    return function () {
+    var url = restApi.host + restApi.items.soccerSeason;
+    return function (request, response) {
         var soccerSeasonsClient = new Client(),
-            args = { headers: { "X-Response-Control": 'minified' }},
-            url = restApi.host + restApi.items.soccerSeason;
-
-        soccerSeasonsClient.get(url, args, service.soccerSeason.GET.soccerSeason);
+            args = { headers: { "X-Response-Control": 'minified' }};
+            
+        soccerSeasonsClient.get('http://api.football-data.org/v1/soccerseasons', args, function (data, response) { soccerSeasonsGET(data, response) });
 
         // registering remote methods
         soccerSeasonsClient.registerMethod("jsonMethod", url, "GET");

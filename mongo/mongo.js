@@ -8,7 +8,8 @@ var service = {
     teams: require('./services/teams.service')
 };
 
-mongoose.connect('mongodb://admin:admin@ds053894.mongolab.com:53894/football');
+//mongoose.connect('mongodb://admin:admin@ds053894.mongolab.com:53894/football');
+mongoose.connect('mongodb://developer:footstat_developer@ds027739.mongolab.com:27739/footstat');
 
 var update = {
     soccerSeasons: service.soccerSeasons.callApi(Client, restApi),

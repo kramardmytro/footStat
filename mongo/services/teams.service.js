@@ -22,12 +22,12 @@ function teamsGET (id, data, response) {
 }
 
 function callApi (Client, restApi) {
+    console.log('callApi() teams.service.js');
     return function (req, res) {
-        var id = req.param('id'),
+        var id = req.params.id,
             teamsClient = new Client(),
             args = { headers: { "X-Response-Control": 'minified' } },
             url = "http://api.football-data.org/v1/soccerseasons/{id}/teams".replace('{id}', id);
-
         teamsClient.get(url, args, function (data, response) { teamsGET(id, data, response) });
 
         // registering remote methods
